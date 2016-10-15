@@ -10,3 +10,6 @@ target_include_directories(buddy_shared PUBLIC ${CMAKE_CURRENT_BINARY_DIR})
 target_include_directories(buddy_static PUBLIC ${CMAKE_CURRENT_BINARY_DIR})
 set_target_properties(buddy_static PROPERTIES
   COMPILE_FLAGS -DBUDDY_SHARED_AND_STATIC_STATIC_DEFINE)
+
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
+
