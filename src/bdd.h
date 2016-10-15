@@ -550,8 +550,8 @@ private:
 
 /*=== BDD constants ====================================================*/
 
-extern BUDDY_SHARED_EXPORT const bdd bddfalsepp;
-extern BUDDY_SHARED_EXPORT const bdd bddtruepp;
+extern const BUDDY_SHARED_EXPORT bdd bddfalsepp;
+extern const BUDDY_SHARED_EXPORT bdd bddtruepp;
 
 #define bddtrue bddtruepp
 #define bddfalse bddfalsepp
