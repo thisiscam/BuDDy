@@ -28,7 +28,7 @@
 ========================================================================*/
 
 /*************************************************************************
-  $Header: /home/jln/phd/bdd/src/RCS/bdd.h,v 1.17 2000/07/03 19:48:49 jln Exp jln $
+  $Header: /cvsroot/buddy/buddy/src/bdd.h,v 1.1.1.1 2004/06/25 13:22:09 haimcohen Exp $
   FILE:  bdd.h
   DESCR: C,C++ User interface for the BDD package
   AUTH:  Jorn Lind
@@ -44,7 +44,6 @@
 #endif
 
 #include <stdio.h>
-#include "buddy_shared_export.h"
 
 /*=== Defined operators for apply calls ================================*/
 
@@ -258,6 +257,7 @@ extern BDD      bdd_nithvar(int);
 extern int      bdd_var(BDD);
 extern BDD      bdd_low(BDD);
 extern BDD      bdd_high(BDD);
+extern int      bdd_varlevel(int);
 extern BDD      bdd_addref(BDD);
 extern BDD      bdd_delref(BDD);
 extern void     bdd_gbc(void);
@@ -550,8 +550,8 @@ private:
 
 /*=== BDD constants ====================================================*/
 
-extern const BUDDY_SHARED_EXPORT bdd bddfalsepp;
-extern const BUDDY_SHARED_EXPORT bdd bddtruepp;
+extern const bdd bddfalsepp;
+extern const bdd bddtruepp;
 
 #define bddtrue bddtruepp
 #define bddfalse bddfalsepp
