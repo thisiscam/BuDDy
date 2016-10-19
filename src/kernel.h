@@ -120,6 +120,24 @@ extern bddCacheStat bddcachestats;
 #define MAXREF 0x3FF
 
    /* Reference counting */
+
+#ifdef MULTITHREAD_REFCOUNT
+#ifdef _WIN32
+#include <windows.h>
+extern HANDLE refcount_lock;
+#define BEGIN_PROTECT_REF_COUNT WaitForSingleObject(refcount_lock, INFINITE);
+#define END_PROTECT_REF_COUNT   ReleaseMutex(refcount_lock);
+#else
+#include <pthread.h>
+extern pthread_mutex_t refcount_lock;
+#define BEGIN_PROTECT_REF_COUNT pthread_mutex_lock(&refcount_lock);
+#define END_PROTECT_REF_COUNT   pthread_mutex_unlock(&refcount_lock);
+#endif
+#else
+#define BEGIN_PROTECT_REF_COUNT
+#define END_PROTECT_REF_COUNT
+#endif
+
 #define DECREF(n) if (bddnodes[n].refcou!=MAXREF && bddnodes[n].refcou>0) bddnodes[n].refcou--
 #define INCREF(n) if (bddnodes[n].refcou<MAXREF) bddnodes[n].refcou++
 #define DECREFp(n) if (n->refcou!=MAXREF && n->refcou>0) n->refcou--

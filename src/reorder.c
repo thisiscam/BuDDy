@@ -1169,6 +1169,8 @@ static int reorder_downSimple(int var0)
  */
 static void reorder_swap(int toBeProcessed, int var0)
 {
+   BEGIN_PROTECT_REF_COUNT;
+
    int var1 = bddlevel2var[bddvar2level[var0]+1];
    
    while (toBeProcessed)
@@ -1224,6 +1226,8 @@ static void reorder_swap(int toBeProcessed, int var0)
 
       toBeProcessed = next;
    }
+   
+   END_PROTECT_REF_COUNT;
 }
 
 

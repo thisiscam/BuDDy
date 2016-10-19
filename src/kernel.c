@@ -49,6 +49,15 @@
 #include "cache.h"
 #include "prime.h"
 
+#ifdef MULTITHREAD_REFCOUNT
+#ifdef _WIN32
+HANDLE refcount_lock = NULL;
+#else
+pthread_mutex_t refcount_lock = PTHREAD_MUTEX_INITIALIZER;
+#endif
+#endif
+
+
 /*************************************************************************
   Various definitions and global variables
 *************************************************************************/
@@ -225,6 +234,10 @@ int bdd_init(int initnodesize, int cs)
    bddcachestats.opMiss = 0;
    bddcachestats.swapCount = 0;
  
+#if defined(MULTITHREAD_REFCOUNT) && defined(_WIN32)
+   refcount_lock = CreateMutex(NULL, FALSE, NULL);
+#endif  
+
    bdd_gbc_hook(bdd_default_gbchandler);
    bdd_error_hook(bdd_default_errhandler);
    bdd_resize_hook(NULL);
@@ -1120,7 +1133,10 @@ BDD bdd_addref(BDD root)
    if (LOW(root) == -1)
       return bdd_error(BDD_ILLBDD);
 
+   BEGIN_PROTECT_REF_COUNT;
    INCREF(root);
+   END_PROTECT_REF_COUNT;
+
    return root;
 }
 
@@ -1149,7 +1165,10 @@ BDD bdd_delref(BDD root)
    /* if the following line is present, fails there much earlier */ 
    if (!HASREF(root)) bdd_error(BDD_BREAK); /* distinctive */
    
+   BEGIN_PROTECT_REF_COUNT;
    DECREF(root);
+   END_PROTECT_REF_COUNT;
+
    return root;
 }
 
