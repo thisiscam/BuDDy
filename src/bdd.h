@@ -256,8 +256,8 @@ extern BDD      bdd_ithvar(int);
 extern BDD      bdd_nithvar(int);
 extern int      bdd_var(BDD);
 #ifdef MARK_PUREBOOL
-extern BDD      bdd_mark_ithvar_pure_bool(int);
-extern int      bdd_is_pure_bool(BDD);
+extern BDD      bdd_mark_ithvar_npure_bool(int);
+extern int      bdd_not_pure_bool(BDD);
 #endif
 extern BDD      bdd_low(BDD);
 extern BDD      bdd_high(BDD);
@@ -470,8 +470,8 @@ private:
    friend bdd      bdd_nithvarpp(int);
    friend int      bdd_var(const bdd &);
 #ifdef MARK_PUREBOOL
-   friend bdd      bdd_mark_ithvar_pure_boolpp(int);
-   friend bool     bdd_is_pure_bool(const bdd &);
+   friend bdd      bdd_mark_ithvar_npure_boolpp(int);
+   friend bool     bdd_not_pure_bool(const bdd &);
 #endif
    friend bdd      bdd_low(const bdd &);
    friend bdd      bdd_high(const bdd &);
@@ -581,10 +581,10 @@ inline int bdd_var(const bdd &r)
 { return bdd_var(r.root); }
 
 #ifdef MARK_PUREBOOL
-inline bdd bdd_mark_ithvar_pure_boolpp(int v)
-{ return bdd_mark_ithvar_pure_bool(v); }
-inline bool bdd_is_pure_bool(const bdd &r)
-{ return bdd_is_pure_bool(r.root); }
+inline bdd bdd_mark_ithvar_npure_boolpp(int v)
+{ return bdd_mark_ithvar_npure_bool(v); }
+inline bool bdd_not_pure_bool(const bdd &r)
+{ return bdd_not_pure_bool(r.root); }
 #endif
 
 inline bdd bdd_low(const bdd &r)
@@ -745,7 +745,7 @@ inline int bdd_addvarblock(const bdd &v, int f)
    /* Hack to allow for overloading */
 #define bdd_init bdd_cpp_init
 #define bdd_ithvar bdd_ithvarpp
-#define bdd_mark_ithvar_pure_bool bdd_mark_ithvar_pure_boolpp
+#define bdd_mark_ithvar_npure_bool bdd_mark_ithvar_npure_boolpp
 #define bdd_nithvar bdd_nithvarpp
 #define bdd_makeset bdd_makesetpp
 #define bdd_ibuildcube bdd_ibuildcubepp

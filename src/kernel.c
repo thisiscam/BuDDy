@@ -361,6 +361,11 @@ int bdd_setvarnum(int num)
 
    for(bdv=bddvarnum ; bddvarnum < num; bddvarnum++)
    {
+#ifdef MARK_PUREBOOL
+      /* Set new var to zero so that we don't get any garbage */
+      bddvarset[bddvarnum*2] = 0;
+      bddvarset[bddvarnum*2+1] = 0;
+#endif
       bddvarset[bddvarnum*2] = PUSHREF( bdd_makenode(bddvarnum, 0, 1) );
       bddvarset[bddvarnum*2+1] = bdd_makenode(bddvarnum, 1, 0);
       POPREF(1);
@@ -896,17 +901,19 @@ BDD bdd_ithvar(int var)
 }
 
 #ifdef MARK_PUREBOOL
-BDD bdd_mark_ithvar_pure_bool(int var)
+BDD bdd_mark_ithvar_npure_bool(int var)
 {
     BDD r = bdd_ithvar(var);
-    PUREBOOL(r) = 1;
+    BDD nr = bdd_nithvar(var);
+    NPUREBOOL(r) = 1;
+    NPUREBOOL(nr) = 1;
     return r;
 }
 
-int bdd_is_pure_bool(BDD root)
+int bdd_not_pure_bool(BDD root)
 {
    CHECK(root);
-   return PUREBOOL(root);
+   return NPUREBOOL(root);
 }
 #endif
 
@@ -1369,9 +1376,9 @@ int bdd_makenode(unsigned int level, int low, int high)
    HIGHp(node) = high;
 
 #ifdef MARK_PUREBOOL
-   PUREBOOLp(node) = PUREBOOL(low) | PUREBOOL(high);
+   NPUREBOOLp(node) = NPUREBOOL(bddvarset[level*2]) | NPUREBOOL(low) | NPUREBOOL(high);
 #endif
-   
+
       /* Insert node */
    node->next = bddnodes[hash].hash;
    bddnodes[hash].hash = res;

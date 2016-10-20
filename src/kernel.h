@@ -78,12 +78,12 @@
 
 typedef struct s_BddNode /* Node table entry */
 {
-   unsigned int refcou    : 10;
+   unsigned int refcou        : 10;
 #ifdef MARK_PUREBOOL
-   unsigned int pure_bool :  1;
-   unsigned int level     : 21;
+   unsigned int not_pure_bool :  1;
+   unsigned int level         : 21;
 #else
-   unsigned int level     : 22;
+   unsigned int level         : 22;
 #endif
    int low;
    int high;
@@ -179,8 +179,8 @@ extern pthread_mutex_t refcount_lock;
 #define HIGHp(p)    ((p)->high)
 
 #ifdef MARK_PUREBOOL
-#define PUREBOOL(n) (bddnodes[n].pure_bool)
-#define PUREBOOLp(p) ((p)->pure_bool)
+#define NPUREBOOL(n) (bddnodes[n].not_pure_bool)
+#define NPUREBOOLp(p) ((p)->not_pure_bool)
 #endif
 
    /* Stacking for garbage collector */
