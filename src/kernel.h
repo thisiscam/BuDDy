@@ -78,8 +78,13 @@
 
 typedef struct s_BddNode /* Node table entry */
 {
-   unsigned int refcou : 10;
-   unsigned int level  : 22;
+   unsigned int refcou    : 10;
+#ifdef MARK_PUREBOOL
+   unsigned int pure_bool :  1;
+   unsigned int level     : 21;
+#else
+   unsigned int level     : 22;
+#endif
    int low;
    int high;
    int hash;
@@ -154,7 +159,7 @@ extern pthread_mutex_t refcount_lock;
 #define SETMARKp(p) (node->level |= MARKON)
 #define UNMARKp(p)  (node->level &= MARKOFF)
 #define MARKEDp(p)  (node->level & MARKON)
-
+ 
    /* Hashfunctions */
 
 #define PAIR(a,b)      ((unsigned int)((((unsigned int)a)+((unsigned int)b))*(((unsigned int)a)+((unsigned int)b)+((unsigned int)1))/((unsigned int)2)+((unsigned int)a)))
@@ -172,6 +177,11 @@ extern pthread_mutex_t refcount_lock;
 #define LEVELp(p)   ((p)->level)
 #define LOWp(p)     ((p)->low)
 #define HIGHp(p)    ((p)->high)
+
+#ifdef MARK_PUREBOOL
+#define PUREBOOL(n) (bddnodes[n].pure_bool)
+#define PUREBOOLp(p) ((p)->pure_bool)
+#endif
 
    /* Stacking for garbage collector */
 #define INITREF    bddrefstacktop = bddrefstack

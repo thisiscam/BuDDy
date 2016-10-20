@@ -895,6 +895,20 @@ BDD bdd_ithvar(int var)
    return bddvarset[var*2];
 }
 
+#ifdef MARK_PUREBOOL
+BDD bdd_mark_ithvar_pure_bool(int var)
+{
+    BDD r = bdd_ithvar(var);
+    PUREBOOL(r) = 1;
+    return r;
+}
+
+int bdd_is_pure_bool(BDD root)
+{
+   CHECK(root);
+   return PUREBOOL(root);
+}
+#endif
 
 /*
 NAME    {* bdd\_nithvar *}
@@ -1353,6 +1367,10 @@ int bdd_makenode(unsigned int level, int low, int high)
    LEVELp(node) = level;
    LOWp(node) = low;
    HIGHp(node) = high;
+
+#ifdef MARK_PUREBOOL
+   PUREBOOLp(node) = PUREBOOL(low) | PUREBOOL(high);
+#endif
    
       /* Insert node */
    node->next = bddnodes[hash].hash;

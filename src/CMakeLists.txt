@@ -19,7 +19,16 @@ OPTION(BUDDY_MULTITHREAD_REFCOUNT
 	  "Build with multithreaded ref counting, useful for binding languages with multithreaded Garbage Collection." 
 	  OFF)
 
+OPTION(BUDDY_MARK_PUREBOOL
+	  "Build buddy such that it exposes an interface to mark an extra flag for each bdd node"
+	  OFF)
+
 if(BUDDY_MULTITHREAD_REFCOUNT)
-	target_compile_definitions(buddy_static PRIVATE -DMULTITHREAD_REFCOUNT)
-	target_compile_definitions(buddy_shared PRIVATE -DMULTITHREAD_REFCOUNT)
+	target_compile_definitions(buddy_static PUBLIC -DMULTITHREAD_REFCOUNT)
+	target_compile_definitions(buddy_shared PUBLIC -DMULTITHREAD_REFCOUNT)
+endif()
+
+if(BUDDY_MARK_PUREBOOL)
+	target_compile_definitions(buddy_static PUBLIC -DMARK_PUREBOOL)
+	target_compile_definitions(buddy_shared PUBLIC -DMARK_PUREBOOL)
 endif()
