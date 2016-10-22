@@ -83,7 +83,7 @@ typedef struct s_BddNode /* Node table entry */
    unsigned int not_pure_bool :  1;
    unsigned int level         : 21;
 #else
-   unsigned int level         : 22;
+   unsigned int level         : 21;
 #endif
    int low;
    int high;
@@ -121,7 +121,11 @@ extern bddCacheStat bddcachestats;
 
 /*=== KERNEL DEFINITIONS ===============================================*/
 
+#ifdef MARK_PUREBOOL
+#define MAXVAR 0xFFFFF
+#else
 #define MAXVAR 0x1FFFFF
+#endif
 #define MAXREF 0x3FF
 
    /* Reference counting */
@@ -150,9 +154,15 @@ extern pthread_mutex_t refcount_lock;
 #define HASREF(n) (bddnodes[n].refcou > 0)
 
    /* Marking BDD nodes */
+#ifdef MARK_PUREBOOL
+#define MARKON   0x100000    /* Bit used to mark a node (1) */
+#define MARKOFF  0xFFFFF    /* - unmark */
+#define MARKHIDE 0xFFFFF
+#else
 #define MARKON   0x200000    /* Bit used to mark a node (1) */
 #define MARKOFF  0x1FFFFF    /* - unmark */
 #define MARKHIDE 0x1FFFFF
+#endif
 #define SETMARK(n)  (bddnodes[n].level |= MARKON)
 #define UNMARK(n)   (bddnodes[n].level &= MARKOFF)
 #define MARKED(n)   (bddnodes[n].level & MARKON)

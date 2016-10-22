@@ -208,6 +208,10 @@ int bdd_init(int initnodesize, int cs)
    LOW(0) = HIGH(0) = 0;
    LOW(1) = HIGH(1) = 1;
    
+#ifdef MARK_PUREBOOL
+   NPUREBOOL(0) = NPUREBOOL(1) = 0;
+#endif
+
    if ((err=bdd_operator_init(cs)) < 0)
    {
       bdd_done();
