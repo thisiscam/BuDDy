@@ -241,6 +241,7 @@ extern char*    bdd_versionstr(void);
 extern int      bdd_versionnum(void);
 extern void     bdd_stats(bddStat *);
 extern void     bdd_cachestats(bddCacheStat *);
+extern void     bdd_fnprintstat(char* fname);
 extern void     bdd_fprintstat(FILE *);
 extern void     bdd_printstat(void);
 extern void     bdd_default_gbchandler(int, bddGbcStat *);
