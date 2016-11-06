@@ -1353,7 +1353,7 @@ int bdd_makenode(unsigned int level, int low, int high)
 	 longjmp(bddexception,1);
       }
 
-      if ((bddfreenum*100) / bddnodesize <= minfreenodes)
+      if (((float)bddfreenum) / bddnodesize <= ((float)minfreenodes) / 100)
       {
 	 bdd_noderesize(1);
 	 hash = NODEHASH(level, low, high);

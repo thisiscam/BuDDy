@@ -83,7 +83,7 @@ typedef struct s_BddNode /* Node table entry */
    unsigned int not_pure_bool :  1;
    unsigned int level         : 21;
 #else
-   unsigned int level         : 21;
+   unsigned int level         : 22;
 #endif
    int low;
    int high;
