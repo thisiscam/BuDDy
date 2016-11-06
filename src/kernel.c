@@ -793,13 +793,14 @@ void bdd_fprintstat(FILE *ofile)
    fprintf(ofile, "Swap count =    %ld\n", s.swapCount);
 }
 
-void bdd_fnprintstat(char* fname)
+int bdd_fnprintstat(char* fname)
 {
    FILE *ofile = fopen(fname, "w");
    if (ofile == NULL)
       return bdd_error(BDD_FILE);
-   bdd_printstat(ofile, r);
+   bdd_fprintstat(ofile);
    fclose(ofile);
+   return 0;
 }
 
 void bdd_printstat(void)
