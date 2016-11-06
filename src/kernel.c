@@ -760,6 +760,7 @@ EXTRA   {* bdd\_fprintstat *}
 SECTION {* kernel *}
 SHORT   {* print cache statistics *}
 PROTO   {* void bdd_printstat(void)
+void bdd_fnprintstat(char*)
 void bdd_fprintstat(FILE *ofile) *}
 DESCR   {* Prints information about the cache performance on standard output
            (or the supplied file). The information contains the number of
@@ -792,6 +793,14 @@ void bdd_fprintstat(FILE *ofile)
    fprintf(ofile, "Swap count =    %ld\n", s.swapCount);
 }
 
+void bdd_fnprintstat(char* fname)
+{
+   FILE *ofile = fopen(fname, "w");
+   if (ofile == NULL)
+      return bdd_error(BDD_FILE);
+   bdd_printstat(ofile, r);
+   fclose(ofile);
+}
 
 void bdd_printstat(void)
 {
