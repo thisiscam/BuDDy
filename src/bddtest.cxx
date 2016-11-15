@@ -27,6 +27,7 @@
     MODIFICATIONS.
 ========================================================================*/
 
+#include <stdlib.h>
 #include <string>
 #include "bdd.h"
 #include "bvec.h"
