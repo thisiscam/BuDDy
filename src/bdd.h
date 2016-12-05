@@ -367,8 +367,8 @@ extern void     bdd_fprintorder(FILE *);
 
 #ifndef CPLUSPLUS
 
-extern const BDD bddfalse;
-extern const BDD bddtrue;
+extern BUDDY_SHARED_EXPORT const BDD bddfalse;
+extern BUDDY_SHARED_EXPORT const BDD bddtrue;
 
 #endif /* CPLUSPLUS */
 
