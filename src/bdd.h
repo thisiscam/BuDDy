@@ -44,6 +44,7 @@
 #endif
 
 #include <stdio.h>
+#include "buddy_shared_export.h"
 
 /*=== Defined operators for apply calls ================================*/
 
@@ -559,8 +560,8 @@ private:
 
 /*=== BDD constants ====================================================*/
 
-extern const bdd bddfalsepp;
-extern const bdd bddtruepp;
+extern const BUDDY_SHARED_EXPORT bdd bddfalsepp;
+extern const BUDDY_SHARED_EXPORT bdd bddtruepp;
 
 #define bddtrue bddtruepp
 #define bddfalse bddfalsepp
