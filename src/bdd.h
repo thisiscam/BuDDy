@@ -39,7 +39,7 @@
 #define _BDD_H
 
    /* Allow this headerfile to define C++ constructs if requested */
-#ifdef __cplusplus
+#if defined(__cplusplus) && !defined(BUDDY_USE_C)
 #define CPLUSPLUS
 #endif
 
